@@ -1,0 +1,69 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'de.mannodermaus.android-junit5'
+}
+
+android {
+    namespace 'com.ajmir.ui'
+    compileSdk rootProject.ext.compileSdkVersion
+
+    defaultConfig {
+        minSdk rootProject.ext.minSdkVersion
+        targetSdk rootProject.ext.targetSdkVersion
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion rootProject.ext.compose.compiler
+    }
+}
+
+dependencies {
+    implementation project(path: ':data:common')
+    implementation project(path: ':data:account:account')
+    implementation project(path: ':data:transaction:transaction')
+
+    implementation "androidx.core:core-ktx:${androidx.ktx}"
+
+    // Compose
+    def composeBom = platform("androidx.compose:compose-bom:${compose.bom}")
+    implementation composeBom
+    androidTestImplementation composeBom
+    implementation 'androidx.compose.material3:material3'
+    implementation("androidx.compose.material:material")
+    implementation 'androidx.compose.ui:ui-tooling-preview'
+    debugImplementation 'androidx.compose.ui:ui-tooling'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1'
+    implementation "androidx.activity:activity-compose:${compose.activity}"
+
+    // Koin
+    implementation "io.insert-koin:koin-core:${koin.base}"
+    implementation "io.insert-koin:koin-android:${koin.android}"
+    implementation "io.insert-koin:koin-androidx-compose:${koin.compose}"
+
+    // Test
+    testImplementation "org.junit.jupiter:junit-jupiter:${test.junit5}"
+    testImplementation "io.mockk:mockk:${test.mockk}"
+    testImplementation "io.kotest:kotest-assertions-core:${test.kotestAssertions}"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:${test.coroutines}"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}

@@ -1,0 +1,24 @@
+pluginManagement {
+	repositories {
+		gradlePluginPortal()
+		google()
+		mavenCentral()
+	}
+}
+dependencyResolutionManagement {
+	repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+	repositories {
+		google()
+		mavenCentral()
+	}
+}
+rootProject.name = "My Bank"
+include ':app'
+include ':ui'
+
+include ':data:networking:retrofit'
+include ':data:account:account'
+include ':data:account:account-impl'
+include ':data:transaction:transaction'
+include ':data:transaction:transaction-impl'
+include ':data:common'
